@@ -10,7 +10,6 @@ class IslamiApp extends StatelessWidget {
     return MaterialApp(
       darkTheme: AppTheme.dark,
       themeMode: ThemeMode.dark,
-      debugShowCheckedModeBanner: false,
       routes: AppRoutes.routes,
       initialRoute: AppRoutes.splash,
     );
