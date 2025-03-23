@@ -13,8 +13,12 @@ class Quran extends StatefulWidget {
 }
 
 class _QuranState extends State<Quran> {
+  String searchKey = '';
+  List<SuraDM> filteredList = [];
+
   @override
   Widget build(BuildContext context) {
+    print("Ana da5alt elbuild");
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
@@ -55,11 +59,26 @@ class _QuranState extends State<Quran> {
     );
   }
 
+  void getFilteredList() {
+    filteredList = ConstantManager.suraList
+        .where((suraDM) =>
+            suraDM.suraNameEn.toLowerCase().contains(searchKey.toLowerCase()) ||
+            suraDM.suraNameAr.contains(searchKey))
+        .toList();
+    print(filteredList.length);
+  }
+
   Widget buildSurasList() {
+    if (searchKey.isEmpty) {
+      filteredList = ConstantManager.suraList;
+    } else {
+      getFilteredList();
+    }
+
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 114,
+      itemCount: filteredList.length,
       separatorBuilder: (context, index) => const Divider(
         color: ColorsManager.white,
         thickness: 1,
@@ -67,7 +86,7 @@ class _QuranState extends State<Quran> {
         endIndent: 64,
       ),
       itemBuilder: (context, index) =>
-          SuraWidget(suraDM: ConstantManager.suraList[index], index: index),
+          SuraWidget(suraDM: filteredList[index], index: index),
     );
   }
 
@@ -75,6 +94,11 @@ class _QuranState extends State<Quran> {
     return SizedBox(
       height: 55,
       child: TextField(
+        onChanged: (value) {
+          searchKey = value;
+          print(searchKey);
+          setState(() {});
+        },
         cursorColor: ColorsManager.ofWhite,
         style: const TextStyle(
             fontSize: 18,
