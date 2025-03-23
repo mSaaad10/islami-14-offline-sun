@@ -18,7 +18,7 @@ class SuraWidget extends StatelessWidget {
               suraNameEn: suraDM.suraNameEn,
               suraNameAr: suraDM.suraNameAr,
               versesNumber: suraDM.versesNumber,
-              suraIndex: index,
+              suraIndex: suraDM.suraIndex,
             ));
       },
       child: Row(
@@ -28,8 +28,11 @@ class SuraWidget extends StatelessWidget {
             alignment: Alignment.center,
             children: [
               Image.asset(AssetsManager.suraNumberBackgroundImage),
-              Text("${index + 1}",
-                  style: Theme.of(context).textTheme.labelMedium)
+              Text(suraDM.suraIndex,
+                  style: Theme.of(context)
+                      .textTheme
+                      .labelMedium
+                      ?.copyWith(fontSize: 12))
             ],
           ),
           const SizedBox(
@@ -59,7 +62,7 @@ class SuraDetailsArguments {
   String suraNameEn;
   String suraNameAr;
   String versesNumber;
-  int suraIndex;
+  String suraIndex;
 
   SuraDetailsArguments(
       {required this.suraNameEn,
