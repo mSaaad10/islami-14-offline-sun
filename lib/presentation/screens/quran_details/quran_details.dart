@@ -26,6 +26,14 @@ class _QuranDetailsState extends State<QuranDetails> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print("Ana da5alt el dispose");
+    arguments.mostRecentSurasKey?.currentState?.getMostRecentSuras();
+  }
+
+  @override
   Widget build(BuildContext context) {
     /// parallel ???
     return Scaffold(
@@ -63,7 +71,7 @@ class _QuranDetailsState extends State<QuranDetails> {
               ],
             ),
             suraContent.isEmpty
-                ? Center(child: CircularProgressIndicator())
+                ? Expanded(child: Center(child: CircularProgressIndicator()))
                 : SuraContent(suraContent: suraContent),
             Image.asset(AssetsManager.quranDetailsImage)
 
@@ -84,7 +92,7 @@ class _QuranDetailsState extends State<QuranDetails> {
       line += "[${i + 1}]";
       suraLinesFinal.add(line);
     }
-
+    await Future.delayed(Duration(milliseconds: 500));
     setState(() {
       suraContent = suraLinesFinal.join();
     });
