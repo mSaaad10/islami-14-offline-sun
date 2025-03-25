@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami_c14_offline_sun/core/assets_manager.dart';
 import 'package:islami_c14_offline_sun/core/colors_manager.dart';
 import 'package:islami_c14_offline_sun/core/constant.dart';
-import 'package:islami_c14_offline_sun/presentation/screens/main_layout/tabs/quran/widgets/most_recent_sura_item.dart';
+import 'package:islami_c14_offline_sun/presentation/screens/main_layout/tabs/quran/widgets/most_recent_suras.dart';
 import 'package:islami_c14_offline_sun/presentation/screens/main_layout/tabs/quran/widgets/sura_widget.dart';
 
 class Quran extends StatefulWidget {
@@ -15,6 +15,8 @@ class Quran extends StatefulWidget {
 class _QuranState extends State<Quran> {
   String searchKey = '';
   List<SuraDM> filteredList = [];
+  GlobalKey<MostRecentSurasState> mostRecentSurasKey =
+      GlobalKey<MostRecentSurasState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,18 +37,9 @@ class _QuranState extends State<Quran> {
               const SizedBox(
                 height: 20,
               ),
-              Text("Most Recently",
-                  style: Theme.of(context).textTheme.labelSmall),
-              const SizedBox(
-                height: 10,
+              MostRecentSuras(
+                key: mostRecentSurasKey,
               ),
-              SizedBox(
-                  height: MediaQuery.sizeOf(context).height * .2,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (context, index) => MostRecentSuraItem(),
-                    itemCount: 6,
-                  )),
               const SizedBox(
                 height: 8,
               ),
@@ -85,8 +78,10 @@ class _QuranState extends State<Quran> {
         indent: 64,
         endIndent: 64,
       ),
-      itemBuilder: (context, index) =>
-          SuraWidget(suraDM: filteredList[index], index: index),
+      itemBuilder: (context, index) => SuraWidget(
+        suraDM: filteredList[index],
+        mostRecentSurasKey: mostRecentSurasKey,
+      ),
     );
   }
 
